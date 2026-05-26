@@ -1,0 +1,402 @@
+﻿<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>精彩集锦 · All ATTACK</title>
+<link href="https://fonts.googleapis.com/css2?family=Oswald:wght@500;700;900&display=swap" rel="stylesheet">
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+:root{
+  --navy:#091530;
+  --navy2:#0d1f45;
+  --red:#c41e3a;
+  --red2:#e8304f;
+  --gold:#d4a843;
+  --white:#ffffff;
+  --gray:#94a3b8;
+  --gray2:#64748b;
+  --border:rgba(255,255,255,0.08);
+  --radius:14px;
+}
+body{
+  font-family:'Oswald','Microsoft YaHei','PingFang SC',sans-serif;
+  background:var(--navy);
+  color:var(--white);
+  line-height:1.6;
+  overflow-x:hidden;
+}
+
+/* ===== 导航栏 ===== */
+header{
+  position:sticky;top:0;z-index:100;
+  background:rgba(9,21,48,0.94);
+  backdrop-filter:blur(20px);
+  border-bottom:1px solid var(--border);
+}
+.nav-inner{
+  max-width:1280px;margin:0 auto;padding:0 40px;
+  display:flex;align-items:center;justify-content:space-between;
+  height:72px;
+}
+.logo{
+  display:flex;align-items:center;gap:12px;
+  text-decoration:none;cursor:pointer;
+}
+.logo-shield{
+  width:48px;height:48px;
+  border-radius:10px;
+  display:block;object-fit:contain;
+}
+.logo-text{
+  font-size:20px;font-weight:800;color:var(--white);
+  letter-spacing:1px;
+}
+.logo-text span{color:var(--red2)}
+
+nav{display:flex;gap:4px}
+nav a{
+  background:none;border:none;color:var(--gray);
+  padding:10px 20px;font-size:14px;cursor:pointer;
+  border-radius:8px;transition:all 0.25s;
+  text-decoration:none;font-weight:500;
+}
+nav a:hover{color:var(--white);background:rgba(255,255,255,0.05)}
+nav a.active{color:var(--white);background:rgba(196,30,58,0.15);font-weight:700}
+
+/* ===== 页面头部 ===== */
+.page-hero{
+  padding:60px 40px;
+  text-align:center;
+  background:
+    radial-gradient(ellipse at 50% 30%,rgba(196,30,58,0.12) 0%,transparent 60%),
+    linear-gradient(180deg,var(--navy),#0a1835);
+  position:relative;
+}
+.page-hero::after{
+  content:"";position:absolute;
+  bottom:0;left:0;right:0;height:1px;
+  background:linear-gradient(90deg,transparent,var(--red),var(--gold),transparent);
+}
+.page-hero h1{
+  font-size:clamp(36px,6vw,56px);
+  font-weight:900;letter-spacing:2px;
+}
+.page-hero h1 span{color:var(--red2)}
+.page-hero p{
+  color:var(--gray);font-size:16px;
+  margin-top:12px;max-width:500px;margin-left:auto;margin-right:auto;
+}
+
+/* ===== 内容区 ===== */
+.content{max-width:1280px;margin:0 auto;padding:48px 40px}
+
+.section-title{
+  font-size:24px;font-weight:800;
+  display:flex;align-items:center;gap:14px;
+  margin-bottom:28px;
+}
+.section-title::before{
+  content:"";width:4px;height:28px;
+  background:var(--red);border-radius:2px;
+}
+
+/* ===== 视频网格 ===== */
+.video-grid{
+  display:grid;
+  grid-template-columns:repeat(2,1fr);
+  gap:24px;
+  margin-bottom:60px;
+}
+.video-card{
+  background:linear-gradient(135deg,var(--navy2),#12254a);
+  border:1px solid var(--border);
+  border-radius:var(--radius);
+  overflow:hidden;
+  transition:all 0.35s;
+  position:relative;
+}
+.video-card:hover{
+  border-color:rgba(255,255,255,0.15);
+  transform:translateY(-4px);
+  box-shadow:0 12px 40px rgba(0,0,0,0.5);
+}
+.video-card video{aspect-ratio:16/9;
+  width:100%;display:block;
+  background:#000;
+}
+.video-info{
+  padding:20px 24px;
+}
+.video-info h3{
+  font-size:16px;color:var(--white);margin-bottom:6px;
+}
+.video-info .meta{
+  font-size:12px;color:var(--gray2);
+  display:flex;align-items:center;gap:8px;
+}
+.video-info .meta .tag{
+  background:rgba(196,30,58,0.15);
+  color:var(--red2);padding:2px 10px;
+  border-radius:10px;font-size:11px;font-weight:700;
+}
+
+/* ===== 精彩瞬间卡片 ===== */
+.moments-grid{
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:20px;
+}
+.moment-card{
+  background:linear-gradient(135deg,var(--navy2),#12254a);
+  border:1px solid var(--border);
+  border-radius:var(--radius);
+  overflow:hidden;
+  transition:all 0.35s;
+}
+.moment-card:hover{
+  transform:translateY(-4px);
+  border-color:rgba(255,255,255,0.15);
+  box-shadow:0 12px 40px rgba(0,0,0,0.4);
+}
+.moment-thumb{
+  height:180px;
+  background:linear-gradient(135deg,rgba(196,30,58,0.3),rgba(212,168,67,0.15));
+  display:flex;align-items:center;justify-content:center;
+  font-size:48px;position:relative;overflow:hidden;
+}
+.moment-thumb::after{
+  content:"";position:absolute;inset:0;
+  background:radial-gradient(circle at center,rgba(255,255,255,0.03) 0%,transparent 70%);
+}
+.moment-body{padding:20px}
+.moment-body h3{
+  font-size:15px;color:var(--white);margin-bottom:8px;
+}
+.moment-body p{
+  font-size:13px;color:var(--gray2);line-height:1.7;
+}
+.moment-body .moment-date{
+  font-size:11px;color:var(--gold);
+  margin-top:12px;font-weight:700;
+  letter-spacing:1px;
+}
+.moment-stat{
+  display:flex;gap:16px;margin-top:10px;
+}
+.moment-stat span{
+  font-size:20px;font-weight:900;color:var(--white);
+}
+.moment-stat small{
+  display:block;font-size:10px;color:var(--gray2);
+  text-transform:uppercase;letter-spacing:1px;
+}
+
+/* ===== 页脚 ===== */
+footer{
+  border-top:1px solid var(--border);
+  padding:48px 40px;text-align:center;
+}
+.footer-inner{max-width:1280px;margin:0 auto}
+.footer-logo{font-size:28px;font-weight:900;margin-bottom:12px}
+.footer-logo span{color:var(--red2)}
+.footer-tagline{color:var(--gray2);font-size:14px;margin-bottom:24px}
+.footer-links{display:flex;gap:32px;justify-content:center;flex-wrap:wrap;margin-bottom:24px}
+.footer-links a{color:var(--gray);text-decoration:none;font-size:13px;transition:color 0.2s}
+.footer-links a:hover{color:var(--white)}
+.footer-copy{color:var(--gray2);font-size:12px}
+
+/* ===== 响应式 ===== */
+@media(max-width:768px){
+  .nav-inner{padding:0 20px}
+  nav a{padding:8px 14px;font-size:13px}
+  .page-hero{padding:40px 20px}
+  .content{padding:32px 20px}
+  .video-grid{grid-template-columns:1fr}
+  .moments-grid{grid-template-columns:1fr}
+}
+
+/* ===== 动画 ===== */
+@keyframes fadeUp{
+  from{opacity:0;transform:translateY(30px)}
+  to{opacity:1;transform:translateY(0)}
+}
+.animate{animation:fadeUp 0.6s ease forwards}
+.delay-1{animation-delay:0.1s}
+.delay-2{animation-delay:0.2s}
+.delay-3{animation-delay:0.3s}
+.delay-4{animation-delay:0.4s}
+</style>
+</head>
+<body>
+
+<header>
+  <div class="nav-inner">
+    <a href="index.html" class="logo">
+      <img class="logo-shield" src="images/logo.png" alt="All ATTACK">
+      <div class="logo-text">ALL<span>ATTACK</span></div>
+    </a>
+    <nav>
+      <a href="index.html">首页</a>
+      <a href="roster.html">球队阵容</a>
+      <a href="#">赛程比分</a>
+      <a href="highlights.html" class="active">精彩集锦</a>
+      <a href="#">阵容图</a>
+    </nav>
+  </div>
+</header>
+
+<section class="page-hero">
+  <h1 class="animate">精彩<span>集锦</span></h1>
+  <p class="animate delay-1">训练赛实录 · 高光时刻 · 每一脚都是信仰</p>
+</section>
+
+<div class="content">
+
+  <!-- 训练赛视频 -->
+  <div class="section-title animate">训练赛录像</div>
+  <div class="video-grid">
+    <div class="video-card animate delay-1">
+      <video controls playsinline preload="metadata">
+        <source src="videos/_h264.mp4" type="video/mp4">
+      </video>
+      <div class="video-info">
+        <h3>训练赛 #1 · 团队配合演练</h3>
+        <div class="meta"><span class="tag">训练赛</span> 2026年5月</div>
+      </div>
+    </div>
+    <div class="video-card animate delay-1">
+      <video controls playsinline preload="metadata">
+        <source src="videos/训练赛2_h264.mp4" type="video/mp4">
+      </video>
+      <div class="video-info">
+        <h3>训练赛 #2 · 攻防转换特训</h3>
+        <div class="meta"><span class="tag">训练赛</span> 2026年5月</div>
+      </div>
+    </div>
+    <div class="video-card animate delay-2">
+      <video controls playsinline preload="metadata">
+        <source src="videos/训练赛3_h264.mp4" type="video/mp4">
+      </video>
+      <div class="video-info">
+        <h3>训练赛 #3 · 定位球战术</h3>
+        <div class="meta"><span class="tag">训练赛</span> 2026年5月</div>
+      </div>
+    </div>
+    <div class="video-card animate delay-2">
+      <video controls playsinline preload="metadata">
+        <source src="videos/训练赛4_h264.mp4" type="video/mp4">
+      </video>
+      <div class="video-info">
+        <h3>训练赛 #4 · 全场对抗赛</h3>
+        <div class="meta"><span class="tag">训练赛</span> 2026年5月</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 精彩瞬间 -->
+  <div class="section-title animate">高光时刻</div>
+  <div class="moments-grid">
+    <div class="moment-card animate delay-1">
+      <div class="moment-thumb">⚡</div>
+      <div class="moment-body">
+        <h3>闪电反击 · 8秒破门</h3>
+        <p>从后场断球到前锋破门，全程仅8秒，完美诠释"All ATTACK"的进攻哲学。</p>
+        <div class="moment-stat">
+          <span>8<span><small>秒</small></span></span>
+          <span>5<span><small>脚传递</small></span></span>
+        </div>
+        <div class="moment-date">2026.05.20 · 超级联赛</div>
+      </div>
+    </div>
+
+    <div class="moment-card animate delay-2">
+      <div class="moment-thumb">🧤</div>
+      <div class="moment-body">
+        <h3>门神三连扑</h3>
+        <p>比赛第87分钟，对方连续三脚射门均被门将神勇扑出，力保胜局。</p>
+        <div class="moment-stat">
+          <span>87'<span><small>分钟</small></span></span>
+          <span>3<span><small>连扑</small></span></span>
+        </div>
+        <div class="moment-date">2026.05.18 · 友谊赛</div>
+      </div>
+    </div>
+
+    <div class="moment-card animate delay-3">
+      <div class="moment-thumb">🎯</div>
+      <div class="moment-body">
+        <h3>40米世界波</h3>
+        <p>中圈附近起脚，皮球划出完美弧线直挂死角，全场沸腾！</p>
+        <div class="moment-stat">
+          <span>40<span><small>米</small></span></span>
+          <span>93<span><small>km/h</small></span></span>
+        </div>
+        <div class="moment-date">2026.05.15 · 冠军杯</div>
+      </div>
+    </div>
+
+    <div class="moment-card animate delay-1">
+      <div class="moment-thumb">🤝</div>
+      <div class="moment-body">
+        <h3>团队配合 · 15脚传控</h3>
+        <p>全队11人触球，连续15脚不间断传递，最终由边锋推射空门。</p>
+        <div class="moment-stat">
+          <span>15<span><small>脚传递</small></span></span>
+          <span>11<span><small>人触球</small></span></span>
+        </div>
+        <div class="moment-date">2026.05.10 · 超级联赛</div>
+      </div>
+    </div>
+
+    <div class="moment-card animate delay-2">
+      <div class="moment-thumb">🔥</div>
+      <div class="moment-body">
+        <h3>帽子戏法 · 单场3球</h3>
+        <p>前锋状态火热，上下半场各入一球，补时阶段点球锁定帽子戏法。</p>
+        <div class="moment-stat">
+          <span>3<span><small>进球</small></span></span>
+          <span>1<span><small>助攻</small></span></span>
+        </div>
+        <div class="moment-date">2026.05.08 · 联赛杯</div>
+      </div>
+    </div>
+
+    <div class="moment-card animate delay-3">
+      <div class="moment-thumb">🏆</div>
+      <div class="moment-body">
+        <h3>赛季最佳进球</h3>
+        <p>角球战术配合，后点凌空倒钩破门，获选当月最佳进球。</p>
+        <div class="moment-stat">
+          <span>🏅<span><small>最佳</small></span></span>
+          <span>2.4<span><small>万票</small></span></span>
+        </div>
+        <div class="moment-date">2026.04.28 · 超级联赛</div>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<footer>
+  <div class="footer-inner">
+    <div class="footer-logo">ALL<span>ATTACK</span></div>
+    <p class="footer-tagline">进攻即信仰，冲锋即荣耀</p>
+    <div class="footer-links">
+      <a href="index.html">首页</a>
+      <a href="roster.html">球队阵容</a>
+      <a href="#">赛程比分</a>
+      <a href="highlights.html">精彩集锦</a>
+      <a href="#">联系我们</a>
+    </div>
+    <p class="footer-copy">&copy; 2026 All ATTACK Professional Football Club. All rights reserved.</p>
+  </div>
+</footer>
+
+</body>
+</html>
+
+
+
+
+
