@@ -54,12 +54,13 @@ header{
 }
 .logo-text span{color:var(--red2)}
 
-nav{display:flex;gap:4px}
+nav{display:flex;gap:4px;overflow-x:auto}
 nav a{
   background:none;border:none;color:var(--gray);
   padding:10px 20px;font-size:14px;cursor:pointer;
   border-radius:8px;transition:all 0.25s;
   text-decoration:none;font-weight:500;
+  white-space:nowrap;flex:0 0 auto;
 }
 nav a:hover{color:var(--white);background:rgba(255,255,255,0.05)}
 nav a.active{color:var(--white);background:rgba(196,30,58,0.15);font-weight:700}
@@ -208,7 +209,9 @@ footer{
 
 /* ===== 响应式 ===== */
 @media(max-width:768px){
-  .nav-inner{padding:0 20px}
+  .nav-inner{padding:0 20px;gap:16px}
+  .logo-text{font-size:16px}
+  .logo-shield{width:40px;height:40px}
   nav a{padding:8px 14px;font-size:13px}
   .page-hero{padding:40px 20px}
   .content{padding:32px 20px}
@@ -239,9 +242,9 @@ footer{
     <nav>
       <a href="index.html">首页</a>
       <a href="roster.html">球队阵容</a>
-      <a href="#">赛程比分</a>
+      <a href="schedule.html">赛程比分</a>
       <a href="highlights.html" class="active">精彩集锦</a>
-      <a href="#">阵容图</a>
+      <a href="formation.html">阵容图</a>
     </nav>
   </div>
 </header>
@@ -385,9 +388,9 @@ footer{
     <div class="footer-links">
       <a href="index.html">首页</a>
       <a href="roster.html">球队阵容</a>
-      <a href="#">赛程比分</a>
+      <a href="schedule.html">赛程比分</a>
       <a href="highlights.html">精彩集锦</a>
-      <a href="#">联系我们</a>
+      <a href="formation.html">阵容图</a>
     </div>
     <p class="footer-copy">&copy; 2026 All ATTACK Professional Football Club. All rights reserved.</p>
   </div>

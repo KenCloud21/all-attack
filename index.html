@@ -54,12 +54,13 @@ header{
 }
 .logo-text span{color:var(--red2)}
 
-nav{display:flex;gap:4px}
+nav{display:flex;gap:4px;overflow-x:auto}
 nav a{
   background:none;border:none;color:var(--gray);
   padding:10px 20px;font-size:14px;cursor:pointer;
   border-radius:8px;transition:all 0.25s;
   text-decoration:none;font-weight:500;
+  white-space:nowrap;flex:0 0 auto;
 }
 nav a:hover{color:var(--white);background:rgba(255,255,255,0.05)}
 nav a.active{color:var(--white);background:rgba(196,30,58,0.15);font-weight:700}
@@ -67,34 +68,37 @@ nav a.active{color:var(--white);background:rgba(196,30,58,0.15);font-weight:700}
 /* ===== 英雄区 ===== */
 .hero{
   position:relative;
-  min-height:85vh;
-  display:flex;align-items:center;justify-content:center;
-  text-align:center;
-  background:
-    radial-gradient(ellipse at 30% 20%,rgba(196,30,58,0.15) 0%,transparent 60%),
-    radial-gradient(ellipse at 70% 80%,rgba(212,168,67,0.08) 0%,transparent 60%),
-    linear-gradient(180deg,var(--navy) 0%,#0a1835 100%);
-  overflow:hidden;
+  min-height:0;
+  display:block;
+  text-align:left;
+  background:var(--navy);
+  overflow:visible;
+  padding-top:min(56.25vw,calc(100vh - 72px));
 }
 .hero::before{
   content:"";position:absolute;inset:0;
   background:
+    image-set(url("images/hero.webp") type("image/webp"),url("images/hero.png") type("image/png")) center top/contain no-repeat,
     repeating-linear-gradient(0deg,transparent,transparent 2px,rgba(255,255,255,0.01) 2px,rgba(255,255,255,0.01) 4px);
+  height:min(56.25vw,calc(100vh - 72px));
   pointer-events:none;
 }
 .hero::after{
-  content:"";position:absolute;
-  top:50%;left:50%;transform:translate(-50%,-50%);
-  width:700px;height:700px;
-  background:radial-gradient(circle,rgba(196,30,58,0.06) 0%,transparent 70%);
+  content:"";position:absolute;left:0;right:0;top:0;height:1px;
+  background:linear-gradient(90deg,transparent,#1d6dff 18%,#33c2ff 36%,#7a2cff 56%,var(--red2) 78%,transparent);
   pointer-events:none;
-  animation:heroGlow 6s ease-in-out infinite alternate;
 }
-@keyframes heroGlow{
-  0%{transform:translate(-50%,-50%) scale(1);opacity:0.5}
-  100%{transform:translate(-50%,-50%) scale(1.3);opacity:1}
+.hero-content{
+  position:relative;z-index:5;
+  max-width:none;padding:46px 0 54px;
+  background:linear-gradient(180deg,rgba(9,21,48,0.98),rgba(9,21,48,0.94));
+  border-top:1px solid var(--border);
 }
-.hero-content{position:relative;z-index:2;padding:0 24px}
+.hero-content::before{
+  content:"";position:absolute;left:0;right:0;top:0;height:1px;
+  background:linear-gradient(90deg,transparent,#1d6dff 18%,#33c2ff 36%,#7a2cff 56%,var(--red2) 78%,transparent);
+}
+.hero-content-inner{max-width:1280px;margin:0 auto;padding:0 40px}
 .hero-badge{
   display:inline-block;
   background:rgba(196,30,58,0.15);
@@ -117,7 +121,7 @@ nav a.active{color:var(--white);background:rgba(196,30,58,0.15);font-weight:700}
   font-weight:400;
 }
 .hero-cta{
-  display:flex;gap:16px;justify-content:center;flex-wrap:wrap;
+  display:flex;gap:16px;justify-content:flex-start;flex-wrap:wrap;
 }
 .btn{
   display:inline-flex;align-items:center;gap:8px;
@@ -148,7 +152,7 @@ nav a.active{color:var(--white);background:rgba(196,30,58,0.15);font-weight:700}
 
 /* ===== 统计区 ===== */
 .stats-section{
-  max-width:1280px;margin:-60px auto 0;padding:0 40px;
+  max-width:1280px;margin:48px auto 0;padding:0 40px;
   position:relative;z-index:10;
 }
 .stats-grid{
@@ -262,6 +266,158 @@ nav a.active{color:var(--white);background:rgba(196,30,58,0.15);font-weight:700}
 .match-status.draw{background:rgba(212,168,67,0.15);color:var(--gold)}
 .match-status.upcoming{border:1px solid rgba(255,255,255,0.15);color:var(--gray);background:transparent}
 
+/* ===== 首发阵容图 ===== */
+.lineup-section{
+  max-width:1280px;margin:80px auto;padding:0 40px;
+}
+.lineup-board{
+  max-width:760px;margin:0 auto;
+  background:linear-gradient(135deg,var(--navy2),#12254a);
+  border:1px solid var(--border);
+  border-radius:var(--radius);
+  overflow:hidden;
+  box-shadow:0 24px 70px rgba(0,0,0,0.35);
+}
+.lineup-poster{
+  position:relative;aspect-ratio:3/4;min-height:0;
+  background:linear-gradient(180deg,#07142e 0%,#0b1733 100%);
+  overflow:hidden;
+}
+.pitch-area{
+  position:absolute;left:28px;right:28px;top:154px;bottom:28px;
+  border-radius:12px;
+  background:
+    linear-gradient(180deg,rgba(3,8,22,0.2),rgba(3,8,22,0.58)),
+    repeating-linear-gradient(90deg,rgba(255,255,255,0.045) 0,rgba(255,255,255,0.045) 58px,rgba(0,0,0,0.16) 58px,rgba(0,0,0,0.16) 116px),
+    linear-gradient(90deg,#002b61 0%,#10275f 34%,#4f123c 66%,#650028 100%);
+  overflow:hidden;
+}
+.pitch-area::before{
+  content:"";position:absolute;inset:0;
+  border:2px solid rgba(255,255,255,0.42);
+  border-radius:12px;
+}
+.pitch-area::after{
+  content:"";position:absolute;left:0;right:0;top:50%;
+  height:2px;background:rgba(255,255,255,0.38);
+}
+.lineup-meta{
+  position:absolute;top:30px;left:34px;right:auto;z-index:5;
+  display:block;width:min(360px,calc(100% - 68px));
+}
+.lineup-kicker{
+  color:var(--gold);font-size:8.4px;font-weight:800;
+  letter-spacing:1.2px;text-transform:uppercase;
+}
+.lineup-meta h3{
+  font-size:clamp(20px,3.5vw,29px);font-weight:900;line-height:1.05;margin-top:2px;
+}
+.lineup-match{
+  text-align:left;font-size:10px;color:var(--gray);margin-top:7px;
+}
+.lineup-match strong{display:block;color:var(--white);font-size:13px}
+.pitch-circle{
+  position:absolute;left:50%;top:50%;
+  width:172px;height:172px;border:2px solid rgba(255,255,255,0.36);
+  border-radius:50%;transform:translate(-50%,-50%);
+}
+.pitch-spot{
+  position:absolute;left:50%;width:8px;height:8px;
+  border-radius:50%;background:rgba(255,255,255,0.72);
+  transform:translate(-50%,-50%);
+}
+.pitch-spot.top{top:17%}
+.pitch-spot.bottom{top:83%}
+.penalty-box,.six-yard-box,.goal-mouth{
+  position:absolute;left:50%;z-index:2;
+  transform:translateX(-50%);
+  border:2px solid rgba(255,255,255,0.42);
+}
+.penalty-box{
+  width:48%;height:132px;
+}
+.penalty-box.top{top:0;border-top:0;border-radius:0 0 10px 10px}
+.penalty-box.bottom{bottom:0;border-bottom:0;border-radius:10px 10px 0 0}
+.six-yard-box{
+  width:24%;height:54px;
+}
+.six-yard-box.top{top:0;border-top:0;border-radius:0 0 8px 8px}
+.six-yard-box.bottom{bottom:0;border-bottom:0;border-radius:8px 8px 0 0}
+.goal-mouth{
+  width:17%;height:16px;
+  background:rgba(255,255,255,0.08);
+}
+.goal-mouth.top{top:-16px;border-bottom:0;border-radius:8px 8px 0 0}
+.goal-mouth.bottom{bottom:-16px;border-top:0;border-radius:0 0 8px 8px}
+.lineup-player{
+  position:absolute;z-index:4;transform:translate(-50%,-50%);
+  width:118px;text-align:center;
+}
+.lineup-avatar{
+  width:76px;height:76px;margin:0 auto 8px;border-radius:50%;
+  padding:3px;background:linear-gradient(135deg,var(--red),var(--gold));
+  box-shadow:0 10px 28px rgba(0,0,0,0.38);
+}
+.lineup-avatar img{
+  width:100%;height:100%;border-radius:50%;object-fit:cover;
+  border:2px solid rgba(255,255,255,0.9);
+}
+.lineup-name{
+  background:rgba(9,21,48,0.82);
+  border:1px solid rgba(255,255,255,0.14);
+  border-radius:999px;
+  padding:5px 9px;
+  font-size:12px;font-weight:800;color:var(--white);
+  white-space:nowrap;
+}
+.lineup-pos{
+  margin-top:3px;color:var(--gold);font-size:10px;font-weight:800;
+  letter-spacing:1px;
+}
+.lp-gk{left:50%;top:88%}
+.lp-lb{left:18%;top:70%}.lp-lcb{left:39%;top:73%}.lp-rcb{left:61%;top:73%}.lp-rb{left:82%;top:70%}
+.lp-lcm{left:28%;top:53%}.lp-cam{left:50%;top:46%}.lp-rcm{left:72%;top:53%}
+.lp-lw{left:22%;top:30%}.lp-st{left:50%;top:24%}.lp-rw{left:78%;top:30%}
+.lineup-side{
+  position:absolute;top:68px;left:34px;right:34px;z-index:5;
+  display:block;
+}
+.lineup-side h3,.lineup-side p,.lineup-side .lineup-kicker{display:none}
+.lineup-shape{
+  display:none;grid-template-columns:repeat(3,1fr);gap:10px;
+  width:150px;
+}
+.lineup-shape div{
+  background:rgba(255,255,255,0.04);
+  border:1px solid var(--border);
+  border-radius:10px;
+  padding:7px 6px;text-align:center;
+}
+.lineup-shape strong{display:block;font-size:14px;line-height:1}
+.lineup-shape span{font-size:8px;color:var(--gray2);letter-spacing:0.6px}
+.lineup-list{display:none}
+.lineup-list-row{
+  display:grid;grid-template-columns:42px 1fr auto;
+  gap:10px;align-items:center;
+  padding-bottom:10px;border-bottom:1px solid var(--border);
+}
+.lineup-list-row:last-child{border-bottom:0;padding-bottom:0}
+.lineup-list-row b{color:var(--gold)}
+.lineup-list-row span{font-size:13px;color:var(--gray)}
+.lineup-list-row em{
+  font-style:normal;background:rgba(196,30,58,0.15);
+  color:var(--red2);border-radius:999px;
+  padding:3px 8px;font-size:10px;font-weight:800;
+}
+.lineup-link{
+  position:absolute;right:0;top:0;
+  display:inline-flex;align-items:center;justify-content:center;
+  padding:12px 18px;border-radius:10px;
+  background:var(--red);color:var(--white);
+  text-decoration:none;font-weight:800;font-size:14px;
+}
+.lineup-link:hover{background:var(--red2)}
+
 /* ===== 视频区 ===== */
 .video-section{
   max-width:1280px;margin:80px auto;padding:0 40px;
@@ -312,16 +468,40 @@ footer{
 
 /* ===== 响应式 ===== */
 @media(max-width:768px){
-  .nav-inner{padding:0 20px}
+  .nav-inner{padding:0 20px;gap:16px}
+  .logo-text{font-size:16px}
+  .logo-shield{width:40px;height:40px}
   nav a{padding:8px 14px;font-size:13px}
-  .hero{min-height:70vh}
-  .stats-section{margin-top:-40px;padding:0 20px}
+  .hero{min-height:0;padding-top:56.25vw}
+  .hero::before{height:56.25vw}
+  .hero-content{padding:32px 0 40px}
+  .hero-content-inner{padding:0 20px}
+  .hero h1{font-size:clamp(38px,13vw,58px)}
+  .stats-section{margin-top:36px;padding:0 20px}
   .stats-grid{grid-template-columns:repeat(2,1fr);gap:12px}
   .stat-card{padding:20px 16px}
   .stat-num{font-size:30px}
-  .schedule-section,.video-section{padding:0 20px;margin:60px auto}
+  .schedule-section,.lineup-section,.video-section{padding:0 20px;margin:60px auto}
   .match-card{flex-wrap:wrap;padding:16px 20px}
   .match-date{min-width:auto}
+  .lineup-board{max-width:100%}
+  .lineup-poster{aspect-ratio:3/4;min-height:620px}
+  .pitch-area{left:20px;right:20px;top:136px;bottom:20px}
+  .lineup-meta{left:20px;right:auto;top:20px;width:calc(100% - 40px)}
+  .lineup-kicker{font-size:8px}
+  .lineup-meta h3{font-size:25px}
+  .lineup-match{text-align:left}
+  .lineup-match{font-size:10px}
+  .lineup-match strong{font-size:13px}
+  .lineup-side{top:86px;left:20px;right:20px}
+  .lineup-side p{font-size:12px}
+  .lineup-side h3{font-size:18px}
+  .lineup-shape{min-width:0;width:126px;gap:6px}
+  .lineup-shape div{padding:5px 4px}
+  .lineup-link{font-size:12px;padding:9px 12px}
+  .lineup-player{width:84px}
+  .lineup-avatar{width:54px;height:54px}
+  .lineup-name{font-size:10px;padding:4px 7px}
   .video-grid{grid-template-columns:1fr}
 }
 
@@ -349,25 +529,27 @@ footer{
     <nav>
       <a href="index.html" class="active">首页</a>
       <a href="roster.html">球队阵容</a>
-      <a href="#">赛程比分</a>
+      <a href="schedule.html">赛程比分</a>
       <a href="highlights.html">精彩集锦</a>
-      <a href="#">阵容图</a>
+      <a href="formation.html">阵容图</a>
     </nav>
   </div>
 </header>
 
 <section class="hero">
   <div class="hero-content">
-    <div class="hero-badge animate">Professional Football Club · FC26</div>
-    <h1 class="animate delay-1">
-      <span class="blue">ALL</span> <span class="red">ATTACK</span>
-    </h1>
-    <p class="hero-tagline animate delay-2">
-      进攻即信仰，冲锋即荣耀。不设防，不停歇，不后退。
-    </p>
-    <div class="hero-cta animate delay-3">
-      <a href="#" class="btn btn-primary">查看阵容</a>
-      <a href="#" class="btn btn-outline">赛程比分</a>
+    <div class="hero-content-inner">
+      <div class="hero-badge animate">Professional Football Club · FC26</div>
+      <h1 class="animate delay-1">
+        <span class="blue">ALL</span> <span class="red">ATTACK</span>
+      </h1>
+      <p class="hero-tagline animate delay-2">
+        进攻即信仰，冲锋即荣耀。不设防，不停歇，不后退。
+      </p>
+      <div class="hero-cta animate delay-3">
+        <a href="roster.html" class="btn btn-primary">查看阵容</a>
+        <a href="schedule.html" class="btn btn-outline">赛程比分</a>
+      </div>
     </div>
   </div>
 </section>
@@ -376,7 +558,7 @@ footer{
   <div class="stats-grid">
     <div class="stat-card animate delay-1">
       <span class="stat-icon">👥</span>
-      <div class="stat-num">23</div>
+      <div class="stat-num">15</div>
       <div class="stat-label">球队成员</div>
     </div>
     <div class="stat-card animate delay-2">
@@ -442,6 +624,113 @@ footer{
   </div>
 </section>
 
+<section class="lineup-section">
+  <div class="section-header">
+    <div class="section-title">首发阵容图</div>
+    <span class="section-badge">4-3-3</span>
+  </div>
+  <div class="lineup-board">
+    <div class="lineup-poster">
+      <div class="lineup-meta">
+        <div>
+          <div class="lineup-kicker">Starting XI</div>
+          <h3>All ATTACK 首发名单</h3>
+        </div>
+        <div class="lineup-match">
+          <strong>All ATTACK vs Storm Riders</strong>
+          5月27日 21:00 · 超级联赛第14轮
+        </div>
+      </div>
+      <aside class="lineup-side">
+        <div>
+          <div class="lineup-kicker">Match Plan</div>
+          <h3>高压 4-3-3</h3>
+          <p>前场三人第一时间逼抢，中场三角负责二点保护，两个边后卫在控球时同步压上。</p>
+        </div>
+        <div class="lineup-shape">
+          <div><strong>4</strong><span>后卫</span></div>
+          <div><strong>3</strong><span>中场</span></div>
+          <div><strong>3</strong><span>前锋</span></div>
+        </div>
+        <div class="lineup-list">
+          <div class="lineup-list-row"><b>12</b><span>UncleJeffChu</span><em>轮换</em></div>
+          <div class="lineup-list-row"><b>13</b><span>Weapon_Zhou</span><em>轮换</em></div>
+          <div class="lineup-list-row"><b>14</b><span>Xiamuchen97</span><em>轮换</em></div>
+          <div class="lineup-list-row"><b>15</b><span>xman</span><em>轮换</em></div>
+        </div>
+        <a class="lineup-link" href="formation.html">查看完整阵容图</a>
+      </aside>
+      <div class="pitch-area">
+        <div class="pitch-circle"></div>
+        <div class="pitch-spot top"></div>
+        <div class="pitch-spot bottom"></div>
+        <div class="penalty-box top"></div>
+        <div class="penalty-box bottom"></div>
+        <div class="six-yard-box top"></div>
+        <div class="six-yard-box bottom"></div>
+        <div class="goal-mouth top"></div>
+        <div class="goal-mouth bottom"></div>
+
+        <div class="lineup-player lp-gk">
+          <div class="lineup-avatar"><img src="images/avatars/3RA-.png" alt="3RA-"></div>
+          <div class="lineup-name">3RA-</div>
+          <div class="lineup-pos">GK</div>
+        </div>
+        <div class="lineup-player lp-lb">
+          <div class="lineup-avatar"><img src="images/avatars/82_Lafee.png" alt="82_Lafee"></div>
+          <div class="lineup-name">82_Lafee</div>
+          <div class="lineup-pos">LB</div>
+        </div>
+        <div class="lineup-player lp-lcb">
+          <div class="lineup-avatar"><img src="images/avatars/Ander_pilro202X.png" alt="Ander_pilro202X"></div>
+          <div class="lineup-name">Ander_pilro202X</div>
+          <div class="lineup-pos">CB</div>
+        </div>
+        <div class="lineup-player lp-rcb">
+          <div class="lineup-avatar"><img src="images/avatars/Encourage_Frog.png" alt="Encourage_Frog"></div>
+          <div class="lineup-name">Encourage_Frog</div>
+          <div class="lineup-pos">CB</div>
+        </div>
+        <div class="lineup-player lp-rb">
+          <div class="lineup-avatar"><img src="images/avatars/hidavid.png" alt="hidavid"></div>
+          <div class="lineup-name">hidavid</div>
+          <div class="lineup-pos">RB</div>
+        </div>
+        <div class="lineup-player lp-lcm">
+          <div class="lineup-avatar"><img src="images/avatars/JayMarsXx.png" alt="JayMarsXx"></div>
+          <div class="lineup-name">JayMarsXx</div>
+          <div class="lineup-pos">CM</div>
+        </div>
+        <div class="lineup-player lp-cam">
+          <div class="lineup-avatar"><img src="images/avatars/Johnnywang121.png" alt="Johnnywang121"></div>
+          <div class="lineup-name">Johnnywang121</div>
+          <div class="lineup-pos">CAM</div>
+        </div>
+        <div class="lineup-player lp-rcm">
+          <div class="lineup-avatar"><img src="images/avatars/Marcoleslie82.png" alt="Marcoleslie82"></div>
+          <div class="lineup-name">Marcoleslie82</div>
+          <div class="lineup-pos">CM</div>
+        </div>
+        <div class="lineup-player lp-lw">
+          <div class="lineup-avatar"><img src="images/avatars/MiJi003.png" alt="MiJi003"></div>
+          <div class="lineup-name">MiJi003</div>
+          <div class="lineup-pos">LW</div>
+        </div>
+        <div class="lineup-player lp-st">
+          <div class="lineup-avatar"><img src="images/avatars/PiggyHer0.png" alt="PiggyHer0"></div>
+          <div class="lineup-name">PiggyHer0</div>
+          <div class="lineup-pos">ST</div>
+        </div>
+        <div class="lineup-player lp-rw">
+          <div class="lineup-avatar"><img src="images/avatars/Tomas9824.png" alt="Tomas9824"></div>
+          <div class="lineup-name">Tomas9824</div>
+          <div class="lineup-pos">RW</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
 <section class="video-section">
   <div class="section-header">
     <div class="section-title">训练赛集锦</div>
@@ -481,9 +770,9 @@ footer{
     <p class="footer-tagline">进攻即信仰，冲锋即荣耀</p>
     <div class="footer-links">
       <a href="roster.html">球队阵容</a>
-      <a href="#">赛程比分</a>
+      <a href="schedule.html">赛程比分</a>
       <a href="highlights.html">精彩集锦</a>
-      <a href="#">联系我们</a>
+      <a href="formation.html">阵容图</a>
     </div>
     <p class="footer-copy">&copy; 2026 All ATTACK Professional Football Club. All rights reserved.</p>
   </div>

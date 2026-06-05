@@ -1,0 +1,363 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>阵容图编辑 · All ATTACK</title>
+<link href="https://fonts.googleapis.com/css2?family=Oswald:wght@500;700;900&display=swap" rel="stylesheet">
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+:root{--navy:#091530;--navy2:#0d1f45;--red:#c41e3a;--red2:#e8304f;--gold:#d4a843;--white:#fff;--gray:#94a3b8;--gray2:#64748b;--border:rgba(255,255,255,.08);--radius:14px}
+body{font-family:'Oswald','Microsoft YaHei','PingFang SC',sans-serif;background:var(--navy);color:var(--white);line-height:1.6;overflow-x:hidden}
+header{position:sticky;top:0;z-index:100;background:rgba(9,21,48,.94);backdrop-filter:blur(20px);border-bottom:1px solid var(--border)}
+.nav-inner{max-width:1280px;margin:0 auto;padding:0 40px;display:flex;align-items:center;justify-content:space-between;height:72px}
+.logo{display:flex;align-items:center;gap:12px;text-decoration:none}.logo-shield{width:48px;height:48px;border-radius:10px;object-fit:contain}.logo-text{font-size:20px;font-weight:800;color:var(--white);letter-spacing:1px}.logo-text span{color:var(--red2)}
+nav{display:flex;gap:4px;overflow-x:auto}nav a{color:var(--gray);padding:10px 20px;font-size:14px;border-radius:8px;text-decoration:none;font-weight:500;transition:all .25s;white-space:nowrap;flex:0 0 auto}nav a:hover{color:var(--white);background:rgba(255,255,255,.05)}nav a.active{color:var(--white);background:rgba(196,30,58,.15);font-weight:700}
+.page-hero{padding:46px 40px;text-align:center;background:radial-gradient(ellipse at 50% 30%,rgba(196,30,58,.12) 0%,transparent 60%),linear-gradient(180deg,var(--navy),#0a1835);position:relative}.page-hero::after{content:"";position:absolute;bottom:0;left:0;right:0;height:1px;background:linear-gradient(90deg,transparent,var(--red),var(--gold),transparent)}.page-hero h1{font-size:clamp(34px,6vw,54px);font-weight:900;letter-spacing:2px}.page-hero h1 span{color:var(--red2)}.page-hero p{color:var(--gray);font-size:16px;margin-top:12px}
+.content{max-width:1280px;margin:0 auto;padding:40px}.editor-layout{display:grid;grid-template-columns:minmax(420px,760px) 360px;gap:28px;align-items:start}.poster-card{background:linear-gradient(135deg,var(--navy2),#12254a);border:1px solid var(--border);border-radius:var(--radius);overflow:hidden;box-shadow:0 24px 70px rgba(0,0,0,.35)}
+.poster{position:relative;aspect-ratio:3/4;background:linear-gradient(180deg,#07142e 0%,#0b1733 100%);overflow:hidden}.poster-meta{position:absolute;top:30px;left:34px;width:min(400px,calc(100% - 68px));z-index:8}.poster-kicker{color:var(--gold);font-size:8.4px;font-weight:800;letter-spacing:1.2px;text-transform:uppercase}.poster-title{font-size:clamp(20px,3.5vw,29px);font-weight:900;line-height:1.05;margin-top:2px}.poster-match{font-size:10px;color:var(--gray);margin-top:7px}.poster-match strong{display:block;color:var(--white);font-size:13px}
+.pitch-area{position:absolute;left:28px;right:28px;top:154px;bottom:28px;border-radius:12px;background:linear-gradient(180deg,rgba(3,8,22,.2),rgba(3,8,22,.58)),repeating-linear-gradient(90deg,rgba(255,255,255,.045) 0,rgba(255,255,255,.045) 58px,rgba(0,0,0,.16) 58px,rgba(0,0,0,.16) 116px),linear-gradient(90deg,#002b61 0%,#10275f 34%,#4f123c 66%,#650028 100%);overflow:hidden}.pitch-area::before{content:"";position:absolute;inset:0;border:2px solid rgba(255,255,255,.42);border-radius:12px}.pitch-area::after{content:"";position:absolute;left:0;right:0;top:50%;height:2px;background:rgba(255,255,255,.38)}.pitch-circle{position:absolute;left:50%;top:50%;width:172px;height:172px;border:2px solid rgba(255,255,255,.36);border-radius:50%;transform:translate(-50%,-50%)}.pitch-spot{position:absolute;left:50%;width:8px;height:8px;border-radius:50%;background:rgba(255,255,255,.72);transform:translate(-50%,-50%)}.pitch-spot.top{top:17%}.pitch-spot.bottom{top:83%}.penalty-box,.six-yard-box,.goal-mouth{position:absolute;left:50%;z-index:2;transform:translateX(-50%);border:2px solid rgba(255,255,255,.42)}.penalty-box{width:48%;height:132px}.penalty-box.top{top:0;border-top:0;border-radius:0 0 10px 10px}.penalty-box.bottom{bottom:0;border-bottom:0;border-radius:10px 10px 0 0}.six-yard-box{width:24%;height:54px}.six-yard-box.top{top:0;border-top:0;border-radius:0 0 8px 8px}.six-yard-box.bottom{bottom:0;border-bottom:0;border-radius:8px 8px 0 0}.goal-mouth{width:17%;height:16px;background:rgba(255,255,255,.08)}.goal-mouth.top{top:-16px;border-bottom:0;border-radius:8px 8px 0 0}.goal-mouth.bottom{bottom:-16px;border-top:0;border-radius:0 0 8px 8px}
+.slot{position:absolute;z-index:5;transform:translate(-50%,-50%);width:142px;text-align:center;border:0;background:transparent;color:var(--white);font-family:inherit;cursor:pointer}.slot.drag-over .avatar{box-shadow:0 0 0 6px rgba(212,168,67,.36),0 12px 34px rgba(0,0,0,.38)}.slot.empty .avatar{background:rgba(9,21,48,.64);border:2px dashed rgba(255,255,255,.38)}.avatar{width:91px;height:91px;margin:0 auto 10px;border-radius:50%;padding:4px;background:linear-gradient(135deg,var(--red),var(--gold));box-shadow:0 12px 34px rgba(0,0,0,.38);display:flex;align-items:center;justify-content:center}.avatar img{width:100%;height:100%;border-radius:50%;object-fit:cover;border:2px solid rgba(255,255,255,.9)}.avatar span{font-size:29px;font-weight:900;color:var(--gray)}.slot-name{display:inline-block;max-width:142px;overflow:hidden;text-overflow:ellipsis;background:rgba(9,21,48,.82);border:1px solid rgba(255,255,255,.14);border-radius:999px;padding:6px 11px;font-size:14px;font-weight:800;white-space:nowrap}.slot-pos{margin-top:4px;color:var(--gold);font-size:12px;font-weight:800;letter-spacing:1px}.slot.empty .slot-name{color:var(--gray)}
+.p-gk{left:50%;top:88%}.p-lb{left:18%;top:70%}.p-lcb{left:39%;top:73%}.p-rcb{left:61%;top:73%}.p-rb{left:82%;top:70%}.p-lcm{left:28%;top:53%}.p-cam{left:50%;top:46%}.p-rcm{left:72%;top:53%}.p-lw{left:22%;top:30%}.p-st{left:50%;top:24%}.p-rw{left:78%;top:30%}
+.side{display:flex;flex-direction:column;gap:18px}.panel{background:linear-gradient(135deg,var(--navy2),#12254a);border:1px solid var(--border);border-radius:var(--radius);padding:20px}.panel h2{font-size:21px;font-weight:900;margin-bottom:14px}.field-grid{display:grid;gap:10px}.field label{display:block;color:var(--gray2);font-size:11px;font-weight:800;letter-spacing:1px;margin-bottom:6px}.field input,.field select{width:100%;font-family:inherit;background:rgba(255,255,255,.04);border:1px solid var(--border);border-radius:10px;color:var(--white);padding:10px 12px;font-size:14px;outline:none}.field select option{background:var(--navy2);color:var(--white)}.field input:focus,.field select:focus{border-color:rgba(212,168,67,.45)}.field input:disabled,.field select:disabled{opacity:.48;cursor:not-allowed}.auth-row{display:grid;grid-template-columns:1fr auto;gap:10px}.auth-status{margin-top:10px;color:var(--gray);font-size:13px}.auth-status.unlocked{color:var(--gold)}.unlock-btn{font-family:inherit;border:1px solid var(--red);background:var(--red);color:var(--white);border-radius:10px;padding:10px 14px;font-size:13px;font-weight:900;cursor:pointer}.unlock-btn:hover{background:var(--red2)}.locked-note{display:none;margin-top:8px;color:var(--gray);font-size:12px}.is-locked .locked-note{display:block}
+.library{display:grid;grid-template-columns:1fr 1fr;gap:10px;max-height:520px;overflow:auto;padding-right:4px}.lib-player{display:grid;grid-template-columns:42px 1fr;gap:9px;align-items:center;background:rgba(255,255,255,.04);border:1px solid var(--border);border-radius:10px;padding:8px;cursor:grab;color:var(--white);font-family:inherit;text-align:left}.lib-player:disabled{cursor:not-allowed;opacity:.48}.lib-player:active{cursor:grabbing}.lib-player.used{opacity:.45}.lib-player.selected{opacity:1;border-color:rgba(212,168,67,.75);box-shadow:0 0 0 2px rgba(212,168,67,.18)}.lib-avatar{width:42px;height:42px;border-radius:50%;background:linear-gradient(135deg,var(--red),var(--gold));padding:2px}.lib-avatar img{width:100%;height:100%;border-radius:50%;object-fit:cover;border:1px solid rgba(255,255,255,.8)}.lib-name{font-size:12px;font-weight:900;line-height:1.15}.lib-role{font-size:10px;color:var(--gold);font-weight:800}.actions{display:grid;grid-template-columns:1fr 1fr;gap:10px}.control-btn{font-family:inherit;border:1px solid var(--border);background:rgba(255,255,255,.04);color:var(--white);border-radius:10px;padding:11px 12px;font-size:13px;font-weight:900;cursor:pointer;transition:all .2s}.control-btn:hover{border-color:rgba(255,255,255,.2);transform:translateY(-1px)}.control-btn.primary{background:var(--red);border-color:var(--red)}.control-btn:disabled{opacity:.48;cursor:not-allowed;transform:none}.note{color:var(--gray);font-size:13px}.toast{position:fixed;left:50%;bottom:24px;z-index:200;transform:translateX(-50%);background:rgba(9,21,48,.95);border:1px solid var(--border);border-radius:999px;padding:10px 18px;color:var(--white);font-size:13px;opacity:0;pointer-events:none;transition:opacity .2s}.toast.show{opacity:1}
+footer{border-top:1px solid var(--border);padding:48px 40px;text-align:center}.footer-logo{font-size:28px;font-weight:900;margin-bottom:12px}.footer-logo span{color:var(--red2)}.footer-tagline{color:var(--gray2);font-size:14px;margin-bottom:24px}.footer-links{display:flex;gap:32px;justify-content:center;flex-wrap:wrap;margin-bottom:24px}.footer-links a{color:var(--gray);text-decoration:none;font-size:13px}.footer-copy{color:var(--gray2);font-size:12px}
+@media(max-width:1000px){.editor-layout{grid-template-columns:1fr}.poster-card{max-width:760px;margin:0 auto;width:100%}.side{max-width:760px;margin:0 auto;width:100%}.library{max-height:none}}
+@media(max-width:768px){.nav-inner{padding:0 20px;gap:16px}.logo-text{font-size:16px}.logo-shield{width:40px;height:40px}nav a{padding:8px 14px;font-size:13px}.page-hero{padding:36px 20px}.content{padding:28px 18px}.poster{min-height:620px}.pitch-area{left:20px;right:20px;top:136px;bottom:20px}.poster-meta{left:20px;top:20px;width:calc(100% - 40px)}.poster-kicker{font-size:8px}.poster-title{font-size:25px}.poster-match{font-size:10px}.poster-match strong{font-size:13px}.slot{width:101px}.avatar{width:65px;height:65px}.slot-name{font-size:12px;padding:5px 8px}.slot-pos{font-size:12px}.library{grid-template-columns:1fr}.actions{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+<header><div class="nav-inner"><a href="index.html" class="logo"><img class="logo-shield" src="images/logo.png" alt="All ATTACK"><div class="logo-text">ALL<span>ATTACK</span></div></a><nav><a href="index.html">首页</a><a href="roster.html">球队阵容</a><a href="schedule.html">赛程比分</a><a href="highlights.html">精彩集锦</a><a href="formation.html" class="active">阵容图</a></nav></div></header>
+<section class="page-hero"><h1>阵容<span>图编辑</span></h1><p>编辑标题 · 从球员库拖入固定站位 · 导出首发海报</p></section>
+<main class="content">
+  <section class="editor-layout">
+    <div class="poster-card">
+      <div class="poster" id="poster">
+        <div class="poster-meta">
+          <div class="poster-kicker" id="posterKicker">Starting XI</div>
+          <div class="poster-title" id="posterTitle">All ATTACK 首发名单</div>
+          <div class="poster-match"><strong id="posterMatch">All ATTACK vs Storm Riders</strong><span id="posterDate">5月27日 21:00 · 超级联赛第14轮</span></div>
+        </div>
+        <div class="pitch-area" id="pitchArea">
+          <div class="pitch-circle"></div><div class="pitch-spot top"></div><div class="pitch-spot bottom"></div>
+          <div class="penalty-box top"></div><div class="penalty-box bottom"></div><div class="six-yard-box top"></div><div class="six-yard-box bottom"></div><div class="goal-mouth top"></div><div class="goal-mouth bottom"></div>
+        </div>
+      </div>
+    </div>
+    <aside class="side">
+      <div class="panel">
+        <h2>编辑权限</h2>
+        <div class="auth-row">
+          <div class="field"><label>编辑密码</label><input id="editPassword" type="password" autocomplete="current-password" placeholder="输入密码"></div>
+          <button class="unlock-btn" id="unlockBtn" type="button">解锁</button>
+        </div>
+        <div class="auth-status" id="authStatus">当前为只读模式</div>
+        <div class="locked-note">解锁后才能调整首发名单和导出阵容图。</div>
+      </div>
+      <div class="panel">
+        <h2>阵型选择</h2>
+        <div class="field-grid">
+          <div class="field">
+            <label>阵型</label>
+            <select id="formationSelect">
+              <option value="4-3-3">4-3-3</option>
+              <option value="4-1-2-3" selected>4-1-2-3 单后腰</option>
+              <option value="4-4-2">4-4-2</option>
+              <option value="4-2-3-1">4-2-3-1</option>
+              <option value="3-5-2">3-5-2</option>
+              <option value="3-4-3">3-4-3</option>
+              <option value="5-3-2">5-3-2</option>
+            </select>
+          </div>
+        </div>
+      </div>
+      <div class="panel">
+        <h2>左上角文字</h2>
+        <div class="field-grid">
+          <div class="field"><label>英文标签</label><input id="inputKicker" value="Starting XI"></div>
+          <div class="field"><label>主标题</label><input id="inputTitle" value="All ATTACK 首发名单"></div>
+          <div class="field"><label>对阵</label><input id="inputMatch" value="All ATTACK vs Storm Riders"></div>
+          <div class="field"><label>时间与赛事</label><input id="inputDate" value="5月27日 21:00 · 超级联赛第14轮"></div>
+        </div>
+      </div>
+      <div class="panel">
+        <h2>球员库</h2>
+        <p class="note">拖动球员到球场位置；也可以先点球员，再点球场位置放入。点击已放入的球员可清空该位置。</p>
+        <div class="library" id="library"></div>
+      </div>
+      <div class="panel">
+        <h2>操作</h2>
+        <div class="actions">
+          <button class="control-btn" id="resetBtn">重置阵容</button>
+          <button class="control-btn primary" id="exportBtn">导出图片</button>
+        </div>
+      </div>
+    </aside>
+  </section>
+</main>
+<div class="toast" id="toast"></div>
+<footer><div class="footer-logo">ALL<span>ATTACK</span></div><p class="footer-tagline">进攻即信仰，冲锋即荣耀</p><div class="footer-links"><a href="index.html">首页</a><a href="roster.html">球队阵容</a><a href="schedule.html">赛程比分</a><a href="highlights.html">精彩集锦</a><a href="formation.html">阵容图</a></div><p class="footer-copy">&copy; 2026 All ATTACK Professional Football Club. All rights reserved.</p></footer>
+<script>
+const players=[
+  {id:"3RA-",name:"3RA-",img:"images/avatars/3RA-.png"},
+  {id:"82_Lafee",name:"82_Lafee",img:"images/avatars/82_Lafee.png"},
+  {id:"Ander_pilro202X",name:"Ander_pilro202X",img:"images/avatars/Ander_pilro202X.png"},
+  {id:"Encourage_Frog",name:"Encourage_Frog",img:"images/avatars/Encourage_Frog.png"},
+  {id:"hidavid",name:"hidavid",img:"images/avatars/hidavid.png"},
+  {id:"JayMarsXx",name:"JayMarsXx",img:"images/avatars/JayMarsXx.png"},
+  {id:"Johnnywang121",name:"Johnnywang121",img:"images/avatars/Johnnywang121.png"},
+  {id:"Marcoleslie82",name:"Marcoleslie82",img:"images/avatars/Marcoleslie82.png"},
+  {id:"MiJi003",name:"MiJi003",img:"images/avatars/MiJi003.png"},
+  {id:"PiggyHer0",name:"PiggyHer0",img:"images/avatars/PiggyHer0.png"},
+  {id:"Tomas9824",name:"Tomas9824",img:"images/avatars/Tomas9824.png"},
+  {id:"UncleJeffChu",name:"UncleJeffChu",img:"images/avatars/UncleJeffChu.png"},
+  {id:"Weapon_Zhou",name:"Weapon_Zhou",img:"images/avatars/Weapon_Zhou.png"},
+  {id:"Xiamuchen97",name:"Xiamuchen97",img:"images/avatars/Xiamuchen97.png"},
+  {id:"xman",name:"xman",img:"images/avatars/xman.png"}
+];
+const startingPlayers=[
+  "3RA-","82_Lafee","Ander_pilro202X","Encourage_Frog","hidavid",
+  "JayMarsXx","Johnnywang121","Marcoleslie82","MiJi003","PiggyHer0","Tomas9824"
+];
+const formations={
+  "4-3-3":[
+    ["gk","GK",50,94],["lb","LB",14,76],["lcb","CB",36,78],["rcb","CB",64,78],["rb","RB",86,76],
+    ["lcm","CM",24,54],["cam","CAM",50,43],["rcm","CM",76,54],["lw","LW",18,28],["st","ST",50,20],["rw","RW",82,28]
+  ],
+  "4-1-2-3":[
+    ["gk","GK",50,94],["lb","LB",14,76],["lcb","CB",36,78],["rcb","CB",64,78],["rb","RB",86,76],
+    ["cdm","CDM",50,58],["lcm","CM",32,43],["rcm","CM",68,43],["lw","LW",18,28],["st","ST",50,20],["rw","RW",82,28]
+  ],
+  "4-4-2":[
+    ["gk","GK",50,94],["lb","LB",14,76],["lcb","CB",36,78],["rcb","CB",64,78],["rb","RB",86,76],
+    ["lm","LM",14,50],["lcm","CM",38,52],["rcm","CM",62,52],["rm","RM",86,50],["lst","ST",38,24],["rst","ST",62,24]
+  ],
+  "4-2-3-1":[
+    ["gk","GK",50,94],["lb","LB",14,76],["lcb","CB",36,78],["rcb","CB",64,78],["rb","RB",86,76],
+    ["ldm","CDM",36,57],["rdm","CDM",64,57],["lam","LAM",18,39],["cam","CAM",50,36],["ram","RAM",82,39],["st","ST",50,19]
+  ],
+  "3-5-2":[
+    ["gk","GK",50,94],["lcb","CB",26,78],["cb","CB",50,80],["rcb","CB",74,78],
+    ["lwb","LWB",12,56],["lcm","CM",34,55],["cam","CAM",50,42],["rcm","CM",66,55],["rwb","RWB",88,56],["lst","ST",38,22],["rst","ST",62,22]
+  ],
+  "3-4-3":[
+    ["gk","GK",50,94],["lcb","CB",26,78],["cb","CB",50,80],["rcb","CB",74,78],
+    ["lm","LM",14,54],["lcm","CM",38,56],["rcm","CM",62,56],["rm","RM",86,54],["lw","LW",18,28],["st","ST",50,20],["rw","RW",82,28]
+  ],
+  "5-3-2":[
+    ["gk","GK",50,94],["lwb","LWB",10,74],["lcb","CB",30,78],["cb","CB",50,80],["rcb","CB",70,78],["rwb","RWB",90,74],
+    ["lcm","CM",30,53],["cam","CAM",50,42],["rcm","CM",70,53],["lst","ST",38,22],["rst","ST",62,22]
+  ]
+};
+let currentFormation="4-1-2-3";
+let slots=createSlots(currentFormation,startingPlayers);
+const defaultFormation=currentFormation;
+const defaultPlayers=[...startingPlayers];
+const pitchArea=document.getElementById("pitchArea");
+const library=document.getElementById("library");
+const toast=document.getElementById("toast");
+const EDIT_PASSWORD="659730";
+const SAVED_LINEUP_KEY="allAttackDefaultLineup";
+let canEdit=sessionStorage.getItem("allAttackFormationUnlocked")==="true";
+let selectedPlayerId=null;
+function loadSavedLineup(){
+  try{
+    const saved=JSON.parse(localStorage.getItem(SAVED_LINEUP_KEY)||"null");
+    if(saved&&formations[saved.formation]&&Array.isArray(saved.players))return saved;
+  }catch(e){}
+  return null;
+}
+const savedLineup=loadSavedLineup();
+function createSlots(formationName,playerIds){
+  return formations[formationName].map((item,index)=>({
+    key:item[0],
+    pos:item[1],
+    x:item[2],
+    y:item[3],
+    player:playerIds[index]||null
+  }));
+}
+currentFormation=savedLineup?savedLineup.formation:currentFormation;
+slots=createSlots(currentFormation,savedLineup?savedLineup.players:startingPlayers);
+document.getElementById("formationSelect").value=currentFormation;
+function saveCurrentLineup(){
+  localStorage.setItem(SAVED_LINEUP_KEY,JSON.stringify({
+    formation:currentFormation,
+    players:slots.map(slot=>slot.player)
+  }));
+}
+function showToast(text){toast.textContent=text;toast.classList.add("show");setTimeout(()=>toast.classList.remove("show"),1700)}
+function byId(id){return players.find(p=>p.id===id)}
+function usedIds(){return new Set(slots.map(slot=>slot.player).filter(Boolean))}
+function renderSlots(){
+  pitchArea.querySelectorAll(".slot").forEach(el=>el.remove());
+  slots.forEach(slot=>{
+    const player=byId(slot.player);
+    const button=document.createElement("button");
+    button.type="button";
+    button.className=`slot ${player?"":"empty"}`;
+    button.style.left=`${slot.x}%`;
+    button.style.top=`${slot.y}%`;
+    button.dataset.slot=slot.key;
+    button.draggable=canEdit&&!!player;
+    button.innerHTML=player
+      ? `<div class="avatar"><img src="${player.img}" alt="${player.name}"></div><div class="slot-name">${player.name}</div><div class="slot-pos">${slot.pos}</div>`
+      : `<div class="avatar"><span>+</span></div><div class="slot-name">放入球员</div><div class="slot-pos">${slot.pos}</div>`;
+    button.addEventListener("click",()=>{
+      if(!canEdit)return;
+      if(selectedPlayerId){placePlayerOnSlot(selectedPlayerId,slot.key);return}
+      clearSlot(slot.key);
+    });
+    button.addEventListener("dragstart",event=>{
+      if(!canEdit||!slot.player){event.preventDefault();return}
+      event.dataTransfer.effectAllowed="move";
+      event.dataTransfer.setData("text/plain",slot.player);
+      event.dataTransfer.setData("application/x-player-id",slot.player);
+      event.dataTransfer.setData("source-slot",slot.key);
+    });
+    button.addEventListener("dragover",event=>{if(!canEdit)return;event.preventDefault();button.classList.add("drag-over")});
+    button.addEventListener("dragleave",()=>button.classList.remove("drag-over"));
+    button.addEventListener("drop",event=>{if(canEdit)dropOnSlot(event,slot.key)});
+    pitchArea.appendChild(button);
+  });
+  renderLibrary();
+  applyEditState();
+}
+function renderLibrary(){
+  const used=usedIds();
+  library.innerHTML=players.map(player=>`
+    <button class="lib-player ${used.has(player.id)?"used":""} ${selectedPlayerId===player.id?"selected":""}" draggable="${canEdit}" data-id="${player.id}" ${canEdit?"":"disabled"}>
+      <div class="lib-avatar"><img src="${player.img}" alt="${player.name}"></div>
+      <div><div class="lib-name">${player.name}</div></div>
+    </button>
+  `).join("");
+  library.querySelectorAll(".lib-player").forEach(item=>{
+    item.addEventListener("click",()=>{
+      if(!canEdit)return;
+      selectedPlayerId=selectedPlayerId===item.dataset.id?null:item.dataset.id;
+      renderLibrary();
+    });
+    item.addEventListener("dragstart",event=>{
+      if(!canEdit){event.preventDefault();return}
+      selectedPlayerId=null;
+      event.dataTransfer.effectAllowed="move";
+      event.dataTransfer.setData("text/plain",item.dataset.id);
+      event.dataTransfer.setData("application/x-player-id",item.dataset.id);
+    });
+  });
+}
+function placePlayerOnSlot(playerId,key){
+  slots.forEach(slot=>{if(slot.player===playerId)slot.player=null});
+  const target=slots.find(slot=>slot.key===key);
+  target.player=playerId;
+  selectedPlayerId=null;
+  saveCurrentLineup();
+  renderSlots();
+}
+function dropOnSlot(event,key){
+  event.preventDefault();
+  document.querySelectorAll(".slot").forEach(el=>el.classList.remove("drag-over"));
+  const playerId=event.dataTransfer.getData("application/x-player-id")||event.dataTransfer.getData("text/plain");
+  const sourceSlotKey=event.dataTransfer.getData("source-slot");
+  if(!playerId)return;
+  if(sourceSlotKey){
+    if(sourceSlotKey===key)return;
+    const source=slots.find(slot=>slot.key===sourceSlotKey);
+    const target=slots.find(slot=>slot.key===key);
+    const targetPlayer=target.player;
+    target.player=source.player;
+    source.player=targetPlayer;
+    saveCurrentLineup();
+    renderSlots();
+    return;
+  }
+  placePlayerOnSlot(playerId,key);
+}
+function clearSlot(key){
+  const slot=slots.find(item=>item.key===key);
+  if(slot.player){slot.player=null;saveCurrentLineup();renderSlots()}
+}
+function resetLineup(){
+  if(!canEdit)return;
+  selectedPlayerId=null;
+  slots=createSlots(currentFormation,[]);
+  renderSlots();
+  showToast("首发名单已清空");
+}
+function changeFormation(formationName){
+  if(!canEdit)return;
+  selectedPlayerId=null;
+  const currentPlayers=slots.map(slot=>slot.player);
+  currentFormation=formationName;
+  slots=createSlots(currentFormation,currentPlayers);
+  saveCurrentLineup();
+  renderSlots();
+  showToast(`已切换为 ${formationName}`);
+}
+function bindText(inputId,outputId){
+  const input=document.getElementById(inputId);
+  const output=document.getElementById(outputId);
+  input.addEventListener("input",()=>output.textContent=input.value);
+}
+function exportImage(){
+  if(!canEdit)return;
+  const poster=document.getElementById("poster");
+  const clone=poster.cloneNode(true);
+  clone.querySelectorAll(".slot").forEach(el=>el.classList.remove("drag-over"));
+  const styles=Array.from(document.styleSheets).map(sheet=>{try{return Array.from(sheet.cssRules).map(rule=>rule.cssText).join("\n")}catch(e){return""}}).join("\n");
+  const rect=poster.getBoundingClientRect();
+  const svg=`<svg xmlns="http://www.w3.org/2000/svg" width="${rect.width}" height="${rect.height}"><foreignObject width="100%" height="100%"><div xmlns="http://www.w3.org/1999/xhtml"><style>${styles}</style>${clone.outerHTML}</div></foreignObject></svg>`;
+  const img=new Image();
+  const url=URL.createObjectURL(new Blob([svg],{type:"image/svg+xml;charset=utf-8"}));
+  img.onload=()=>{
+    const canvas=document.createElement("canvas");
+    canvas.width=Math.round(rect.width*2);
+    canvas.height=Math.round(rect.height*2);
+    const ctx=canvas.getContext("2d");
+    ctx.scale(2,2);
+    ctx.drawImage(img,0,0,rect.width,rect.height);
+    URL.revokeObjectURL(url);
+    const link=document.createElement("a");
+    link.download="All-ATTACK-starting-xi.png";
+    link.href=canvas.toDataURL("image/png");
+    link.click();
+    showToast("阵容图已导出");
+  };
+  img.src=url;
+}
+function applyEditState(){
+  document.body.classList.toggle("is-locked",!canEdit);
+  document.querySelectorAll("#formationSelect,#inputKicker,#inputTitle,#inputMatch,#inputDate,#resetBtn,#exportBtn").forEach(el=>el.disabled=!canEdit);
+  library.querySelectorAll(".lib-player").forEach(item=>{
+    item.disabled=!canEdit;
+    item.draggable=canEdit;
+  });
+  const status=document.getElementById("authStatus");
+  status.textContent=canEdit?"已解锁，可编辑阵容":"当前为只读模式";
+  status.classList.toggle("unlocked",canEdit);
+}
+function unlockEditing(){
+  const input=document.getElementById("editPassword");
+  if(input.value===EDIT_PASSWORD){
+    canEdit=true;
+    sessionStorage.setItem("allAttackFormationUnlocked","true");
+    input.value="";
+    renderSlots();
+    showToast("编辑权限已解锁");
+    return;
+  }
+  showToast("密码不正确");
+}
+bindText("inputKicker","posterKicker");
+bindText("inputTitle","posterTitle");
+bindText("inputMatch","posterMatch");
+bindText("inputDate","posterDate");
+document.getElementById("resetBtn").addEventListener("click",resetLineup);
+document.getElementById("exportBtn").addEventListener("click",exportImage);
+document.getElementById("formationSelect").addEventListener("change",event=>changeFormation(event.target.value));
+document.getElementById("unlockBtn").addEventListener("click",unlockEditing);
+document.getElementById("editPassword").addEventListener("keydown",event=>{if(event.key==="Enter")unlockEditing()});
+renderSlots();
+</script>
+</body>
+</html>
