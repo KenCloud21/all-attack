@@ -299,9 +299,12 @@ function clearSlot(key){
 function resetLineup(){
   if(!canEdit)return;
   selectedPlayerId=null;
-  slots=createSlots(currentFormation,[]);
+  currentFormation=defaultFormation;
+  slots=createSlots(currentFormation,defaultPlayers);
+  document.getElementById("formationSelect").value=currentFormation;
+  saveCurrentLineup();
   renderSlots();
-  showToast("首发名单已清空");
+  showToast("已恢复默认首发阵容");
 }
 function changeFormation(formationName){
   if(!canEdit)return;
