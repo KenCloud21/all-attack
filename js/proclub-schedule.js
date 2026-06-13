@@ -9,6 +9,19 @@
     return monthNames[date.getMonth()] || "";
   }
 
+  function formatBeijingDateTime(date) {
+    return date.toLocaleString("zh-CN", {
+      timeZone: "Asia/Shanghai",
+      hour12: false,
+      year: "numeric",
+      month: "2-digit",
+      day: "2-digit",
+      hour: "2-digit",
+      minute: "2-digit",
+      second: "2-digit",
+    });
+  }
+
   function statusClass(status) {
     if (status === "胜") return "win";
     if (status === "平") return "draw";
@@ -54,9 +67,14 @@
       .sort((a, b) => a.startsAt - b.startsAt)[0];
   }
 
-  function updateCountdown(match) {
+  function updateCountdown(match, syncedAt) {
     const card = document.querySelector("[data-next-countdown]");
     if (!card) return;
+    const sync = card.querySelector("[data-countdown-sync]");
+    if (sync) {
+      const syncedText = syncedAt ? formatBeijingDateTime(new Date(syncedAt)) : "暂无同步记录";
+      sync.textContent = `当前北京时间 ${formatBeijingDateTime(new Date())} · Proclub 同步 ${syncedText}`;
+    }
 
     if (!match) {
       const title = card.querySelector("[data-countdown-title]");
@@ -72,7 +90,7 @@
     const title = card.querySelector("[data-countdown-title]");
     const meta = card.querySelector("[data-countdown-meta]");
     if (title) title.textContent = `${match.home} vs ${match.away}`;
-    if (meta) meta.textContent = `${match.date} ${match.time} · ${match.competition || "FPL - L-Cup S9"} · ${match.venue || "赛程"}`;
+    if (meta) meta.textContent = `北京时间 ${match.date} ${match.time} · ${match.competition || "FPL - L-Cup S9"} · ${match.venue || "赛程"}`;
 
     const diff = Math.max(0, match.startsAt.getTime() - Date.now());
     const totalSeconds = Math.floor(diff / 1000);
@@ -91,14 +109,14 @@
     if (secondsEl) secondsEl.textContent = pad(seconds);
   }
 
-  function startCountdown(matches) {
+  function startCountdown(matches, syncedAt) {
     let nextMatch = findNextMatch(matches);
-    updateCountdown(nextMatch);
+    updateCountdown(nextMatch, syncedAt);
     window.setInterval(() => {
       if (!nextMatch || nextMatch.startsAt.getTime() <= Date.now()) {
         nextMatch = findNextMatch(matches);
       }
-      updateCountdown(nextMatch);
+      updateCountdown(nextMatch, syncedAt);
     }, 1000);
   }
 
@@ -117,12 +135,12 @@
       const scheduleList = document.querySelector("[data-proclub-full-schedule]");
       if (scheduleList) scheduleList.innerHTML = matches.map(renderScheduleCard).join("");
 
-      startCountdown(matches);
+      startCountdown(matches, data.updatedAt);
 
       const updated = document.querySelector("[data-proclub-updated]");
       if (updated && data.updatedAt) {
         const date = new Date(data.updatedAt);
-        updated.textContent = `Proclub 自动同步 · ${date.toLocaleString("zh-CN", { hour12: false })}`;
+        updated.textContent = `Proclub 自动同步 · 北京时间 ${formatBeijingDateTime(date)}`;
       }
     })
     .catch(() => {
