@@ -55,6 +55,16 @@
     `;
   }
 
+  function renderStats(stats) {
+    if (!stats) return;
+    document.querySelectorAll("[data-proclub-stat]").forEach((item) => {
+      const key = item.dataset.proclubStat;
+      if (Object.prototype.hasOwnProperty.call(stats, key)) {
+        item.textContent = stats[key] ?? 0;
+      }
+    });
+  }
+
   function pad(value) {
     return String(value).padStart(2, "0");
   }
@@ -130,6 +140,7 @@
       const scheduleList = document.querySelector("[data-proclub-full-schedule]");
       if (scheduleList) scheduleList.innerHTML = matches.map(renderScheduleCard).join("");
 
+      renderStats(data.stats);
       startCountdown(matches);
 
       const updated = document.querySelector("[data-proclub-updated]");

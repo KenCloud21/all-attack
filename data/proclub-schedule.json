@@ -1,8 +1,20 @@
 {
   "source": "https://proclub.me/competitions/fpl/team/104-fifa-proclub-league-leaguecup-season-9/23228-all-attack",
-  "updatedAt": "2026-06-13T10:35:59.088Z",
+  "updatedAt": "2026-06-13T11:40:21.360Z",
   "competition": "FPL - L-Cup S9",
   "team": "ALL ATTACK",
+  "stats": {
+    "rank": 2,
+    "played": 0,
+    "wins": 0,
+    "losses": 0,
+    "draws": 0,
+    "goalDifference": 0,
+    "points": 0,
+    "totalGoals": 0,
+    "longestWinStreak": 0,
+    "championships": 0
+  },
   "matches": [
     {
       "date": "2026-06-15",
