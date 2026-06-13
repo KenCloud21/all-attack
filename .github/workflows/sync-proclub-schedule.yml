@@ -1,0 +1,30 @@
+name: Sync Proclub schedule
+
+on:
+  schedule:
+    - cron: "15 */6 * * *"
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  sync:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+      - run: node scripts/sync-proclub-schedule.mjs
+      - name: Commit schedule update
+        run: |
+          if git diff --quiet data/proclub-schedule.json; then
+            echo "No schedule changes."
+            exit 0
+          fi
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add data/proclub-schedule.json
+          git commit -m "Sync Proclub schedule"
+          git push
