@@ -67,14 +67,9 @@
       .sort((a, b) => a.startsAt - b.startsAt)[0];
   }
 
-  function updateCountdown(match, syncedAt) {
+  function updateCountdown(match) {
     const card = document.querySelector("[data-next-countdown]");
     if (!card) return;
-    const sync = card.querySelector("[data-countdown-sync]");
-    if (sync) {
-      const syncedText = syncedAt ? formatBeijingDateTime(new Date(syncedAt)) : "暂无同步记录";
-      sync.textContent = `当前北京时间 ${formatBeijingDateTime(new Date())} · Proclub 同步 ${syncedText}`;
-    }
 
     if (!match) {
       const title = card.querySelector("[data-countdown-title]");
@@ -109,14 +104,14 @@
     if (secondsEl) secondsEl.textContent = pad(seconds);
   }
 
-  function startCountdown(matches, syncedAt) {
+  function startCountdown(matches) {
     let nextMatch = findNextMatch(matches);
-    updateCountdown(nextMatch, syncedAt);
+    updateCountdown(nextMatch);
     window.setInterval(() => {
       if (!nextMatch || nextMatch.startsAt.getTime() <= Date.now()) {
         nextMatch = findNextMatch(matches);
       }
-      updateCountdown(nextMatch, syncedAt);
+      updateCountdown(nextMatch);
     }, 1000);
   }
 
@@ -135,7 +130,7 @@
       const scheduleList = document.querySelector("[data-proclub-full-schedule]");
       if (scheduleList) scheduleList.innerHTML = matches.map(renderScheduleCard).join("");
 
-      startCountdown(matches, data.updatedAt);
+      startCountdown(matches);
 
       const updated = document.querySelector("[data-proclub-updated]");
       if (updated && data.updatedAt) {
