@@ -42,6 +42,66 @@
     `;
   }
 
+  function pad(value) {
+    return String(value).padStart(2, "0");
+  }
+
+  function findNextMatch(matches) {
+    const now = new Date();
+    return matches
+      .map((match) => ({ ...match, startsAt: parseLocalDate(match) }))
+      .filter((match) => match.startsAt.getTime() > now.getTime())
+      .sort((a, b) => a.startsAt - b.startsAt)[0];
+  }
+
+  function updateCountdown(match) {
+    const card = document.querySelector("[data-next-countdown]");
+    if (!card) return;
+
+    if (!match) {
+      const title = card.querySelector("[data-countdown-title]");
+      const meta = card.querySelector("[data-countdown-meta]");
+      if (title) title.textContent = "暂无未来比赛";
+      if (meta) meta.textContent = "等待 Proclub 更新下一轮赛程";
+      card.querySelectorAll("[data-countdown-days],[data-countdown-hours],[data-countdown-minutes],[data-countdown-seconds]").forEach((el) => {
+        el.textContent = "00";
+      });
+      return;
+    }
+
+    const title = card.querySelector("[data-countdown-title]");
+    const meta = card.querySelector("[data-countdown-meta]");
+    if (title) title.textContent = `${match.home} vs ${match.away}`;
+    if (meta) meta.textContent = `${match.date} ${match.time} · ${match.competition || "FPL - L-Cup S9"} · ${match.venue || "赛程"}`;
+
+    const diff = Math.max(0, match.startsAt.getTime() - Date.now());
+    const totalSeconds = Math.floor(diff / 1000);
+    const days = Math.floor(totalSeconds / 86400);
+    const hours = Math.floor((totalSeconds % 86400) / 3600);
+    const minutes = Math.floor((totalSeconds % 3600) / 60);
+    const seconds = totalSeconds % 60;
+
+    const daysEl = card.querySelector("[data-countdown-days]");
+    const hoursEl = card.querySelector("[data-countdown-hours]");
+    const minutesEl = card.querySelector("[data-countdown-minutes]");
+    const secondsEl = card.querySelector("[data-countdown-seconds]");
+    if (daysEl) daysEl.textContent = pad(days);
+    if (hoursEl) hoursEl.textContent = pad(hours);
+    if (minutesEl) minutesEl.textContent = pad(minutes);
+    if (secondsEl) secondsEl.textContent = pad(seconds);
+  }
+
+  function startCountdown(matches) {
+    let nextMatch = findNextMatch(matches);
+    updateCountdown(nextMatch);
+    window.setInterval(() => {
+      if (!nextMatch || nextMatch.startsAt.getTime() <= Date.now()) {
+        nextMatch = findNextMatch(matches);
+      }
+      updateCountdown(nextMatch);
+    }, 1000);
+  }
+
   async function loadSchedule() {
     const response = await fetch("data/proclub-schedule.json", { cache: "no-store" });
     if (!response.ok) throw new Error(`Schedule request failed: ${response.status}`);
@@ -56,6 +116,8 @@
 
       const scheduleList = document.querySelector("[data-proclub-full-schedule]");
       if (scheduleList) scheduleList.innerHTML = matches.map(renderScheduleCard).join("");
+
+      startCountdown(matches);
 
       const updated = document.querySelector("[data-proclub-updated]");
       if (updated && data.updatedAt) {

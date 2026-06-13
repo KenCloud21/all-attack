@@ -213,6 +213,23 @@ nav a.active{color:var(--white);background:rgba(196,30,58,0.15);font-weight:700}
   color:var(--gold);padding:6px 16px;
   border-radius:20px;font-size:13px;font-weight:700;
 }
+.countdown-card{
+  display:grid;grid-template-columns:1.2fr auto;gap:24px;align-items:center;
+  background:linear-gradient(135deg,rgba(13,31,69,0.98),rgba(18,37,74,0.92));
+  border:1px solid rgba(255,255,255,0.1);border-radius:var(--radius);
+  padding:22px 24px;margin-bottom:18px;
+  box-shadow:0 14px 42px rgba(0,0,0,0.25);
+}
+.countdown-kicker{color:var(--gold);font-size:12px;font-weight:800;letter-spacing:2px;text-transform:uppercase}
+.countdown-title{font-size:22px;font-weight:900;margin-top:4px}
+.countdown-meta{color:var(--gray);font-size:14px;margin-top:4px}
+.countdown-clock{display:grid;grid-template-columns:repeat(4,72px);gap:10px}
+.countdown-unit{
+  background:rgba(255,255,255,0.04);border:1px solid var(--border);
+  border-radius:10px;text-align:center;padding:12px 8px;
+}
+.countdown-unit strong{display:block;font-size:28px;line-height:1;font-weight:900;color:var(--white)}
+.countdown-unit span{display:block;font-size:11px;color:var(--gray2);margin-top:6px;letter-spacing:1px}
 .match-list{display:flex;flex-direction:column;gap:12px}
 .match-card{
   display:flex;align-items:center;
@@ -482,6 +499,9 @@ footer{
   .stat-card{padding:20px 16px}
   .stat-num{font-size:30px}
   .schedule-section,.lineup-section,.video-section{padding:0 20px;margin:60px auto}
+  .countdown-card{grid-template-columns:1fr;padding:18px}
+  .countdown-clock{grid-template-columns:repeat(4,1fr)}
+  .countdown-unit strong{font-size:22px}
   .match-card{flex-wrap:wrap;padding:16px 20px}
   .match-date{min-width:auto}
   .lineup-board{max-width:100%}
@@ -583,6 +603,19 @@ footer{
   <div class="section-header">
     <div class="section-title">近期赛程</div>
     <span class="section-badge" data-proclub-updated>FPL - L-Cup S9</span>
+  </div>
+  <div class="countdown-card" data-next-countdown>
+    <div>
+      <div class="countdown-kicker">Next Match</div>
+      <div class="countdown-title" data-countdown-title>ALL ATTACK vs Old Sport</div>
+      <div class="countdown-meta" data-countdown-meta>2026-06-15 22:00 · FPL - L-Cup S9</div>
+    </div>
+    <div class="countdown-clock">
+      <div class="countdown-unit"><strong data-countdown-days>--</strong><span>天</span></div>
+      <div class="countdown-unit"><strong data-countdown-hours>--</strong><span>小时</span></div>
+      <div class="countdown-unit"><strong data-countdown-minutes>--</strong><span>分钟</span></div>
+      <div class="countdown-unit"><strong data-countdown-seconds>--</strong><span>秒</span></div>
+    </div>
   </div>
   <div class="match-list" data-proclub-home-schedule>
     <div class="match-card">
