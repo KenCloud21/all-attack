@@ -1,39 +1,23 @@
 {
   "source": "https://proclub.me/competitions/fpl/team/104-fifa-proclub-league-leaguecup-season-9/23228-all-attack",
-  "updatedAt": "2026-06-15T12:43:28.457Z",
+  "updatedAt": "2026-06-15T21:22:34.163Z",
   "competition": "FPL - L-Cup S9",
   "team": "ALL ATTACK",
   "stats": {
-    "rank": 2,
-    "played": 0,
-    "wins": 0,
-    "losses": 0,
+    "rank": 3,
+    "played": 2,
+    "wins": 1,
+    "losses": 1,
     "draws": 0,
-    "goalDifference": 0,
-    "points": 0,
+    "goalDifference": -3,
+    "points": 3,
     "totalGoals": 0,
     "longestWinStreak": 0,
     "championships": 0
   },
   "matches": [
     {
-      "date": "2026-06-15",
-      "time": "22:00",
-      "home": "ALL ATTACK",
-      "away": "Old Sport",
-      "venue": "主场",
-      "status": "即将"
-    },
-    {
-      "date": "2026-06-15",
-      "time": "22:30",
-      "home": "ALL ATTACK",
-      "away": "Azapopi FC",
-      "venue": "主场",
-      "status": "即将"
-    },
-    {
-      "date": "2026-06-18",
+      "date": "2026-06-22",
       "time": "22:00",
       "home": "ShangHai5XL",
       "away": "ALL ATTACK",
@@ -41,7 +25,7 @@
       "status": "即将"
     },
     {
-      "date": "2026-06-18",
+      "date": "2026-06-22",
       "time": "22:30",
       "home": "Old Sport",
       "away": "ALL ATTACK",
@@ -49,7 +33,7 @@
       "status": "即将"
     },
     {
-      "date": "2026-06-22",
+      "date": "2026-06-25",
       "time": "22:00",
       "home": "Azapopi FC",
       "away": "ALL ATTACK",
@@ -57,7 +41,7 @@
       "status": "即将"
     },
     {
-      "date": "2026-06-22",
+      "date": "2026-06-25",
       "time": "22:30",
       "home": "ALL ATTACK",
       "away": "ShangHai5XL",
