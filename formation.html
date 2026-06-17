@@ -36,7 +36,7 @@ footer{border-top:1px solid var(--border);padding:48px 40px;text-align:center}.f
         <div class="poster-meta">
           <div class="poster-kicker" id="posterKicker">Starting XI</div>
           <div class="poster-title" id="posterTitle">All ATTACK 首发名单</div>
-          <div class="poster-match"><strong id="posterMatch">All ATTACK vs Storm Riders</strong><span id="posterDate">5月27日 21:00 · 超级联赛第14轮</span></div>
+          <div class="poster-match" data-lineup-next-match><strong id="posterMatch" data-lineup-match-title>All ATTACK vs Storm Riders</strong><span id="posterDate" data-lineup-match-meta>5月27日 21:00 · 超级联赛第14轮</span></div>
         </div>
         <div class="pitch-area" id="pitchArea">
           <div class="pitch-circle"></div><div class="pitch-spot top"></div><div class="pitch-spot bottom"></div>
@@ -97,97 +97,30 @@ footer{border-top:1px solid var(--border);padding:48px 40px;text-align:center}.f
 </main>
 <div class="toast" id="toast"></div>
 <footer><div class="footer-logo">ALL<span>ATTACK</span></div><p class="footer-tagline">进攻即信仰，冲锋即荣耀</p><div class="footer-links"><a href="index.html">首页</a><a href="roster.html">球队阵容</a><a href="schedule.html">赛程比分</a><a href="highlights.html">精彩集锦</a><a href="formation.html">阵容图</a></div><p class="footer-copy">&copy; 2026 All ATTACK Professional Football Club. All rights reserved.</p></footer>
+<script src="js/all-attack-lineup.js"></script>
+<script src="js/proclub-schedule.js?v=20260616-2"></script>
 <script>
-const players=[
-  {id:"3RA-",name:"3RA-",img:"images/avatars/3RA-.png"},
-  {id:"82_Lafee",name:"82_Lafee",img:"images/avatars/82_Lafee.png"},
-  {id:"Addits",name:"Addits",img:"images/avatars/Addits.png"},
-  {id:"Ander_pilro202X",name:"Ander_pilro202X",img:"images/avatars/Ander_pilro202X.png"},
-  {id:"Encourage_Frog",name:"Encourage_Frog",img:"images/avatars/Encourage_Frog.png"},
-  {id:"hidavid",name:"hidavid",img:"images/avatars/hidavid.png"},
-  {id:"JayMarsXx",name:"JayMarsXx",img:"images/avatars/JayMarsXx.png"},
-  {id:"Johnnywang315",name:"Johnnywang315",img:"images/avatars/Johnnywang315.png"},
-  {id:"Marcoleslie82",name:"Marcoleslie82",img:"images/avatars/Marcoleslie82.png"},
-  {id:"MiJi003",name:"MiJi003",img:"images/avatars/MiJi003.png"},
-  {id:"PiggyHer0",name:"PiggyHer0",img:"images/avatars/PiggyHer0.png"},
-  {id:"Tomas9824",name:"Tomas9824",img:"images/avatars/Tomas9824.png"},
-  {id:"UncleJeffChu",name:"UncleJeffChu",img:"images/avatars/UncleJeffChu.png"},
-  {id:"Xiamuchen97",name:"Xiamuchen97",img:"images/avatars/Xiamuchen97.png"},
-  {id:"xman",name:"xman",img:"images/avatars/xman.png"}
-];
-const startingPlayers=[
-  "PiggyHer0","82_Lafee","xman","MiJi003","Tomas9824",
-  "Xiamuchen97","3RA-","Ander_pilro202X","JayMarsXx","Johnnywang315","Addits"
-];
-const formations={
-  "4-3-3":[
-    ["gk","GK",50,94],["lb","LB",14,76],["lcb","CB",36,78],["rcb","CB",64,78],["rb","RB",86,76],
-    ["lcm","CM",24,54],["cam","CAM",50,43],["rcm","CM",76,54],["lw","LW",18,28],["st","ST",50,20],["rw","RW",82,28]
-  ],
-  "4-1-2-3":[
-    ["gk","GK",50,94],["lb","LB",14,76],["lcb","CB",36,78],["rcb","CB",64,78],["rb","RB",86,76],
-    ["cdm","CDM",50,58],["lcm","CM",32,43],["rcm","CM",68,43],["lw","LW",18,28],["st","ST",50,20],["rw","RW",82,28]
-  ],
-  "4-4-2":[
-    ["gk","GK",50,94],["lb","LB",14,76],["lcb","CB",36,78],["rcb","CB",64,78],["rb","RB",86,76],
-    ["lm","LM",14,50],["lcm","CM",38,52],["rcm","CM",62,52],["rm","RM",86,50],["lst","ST",38,24],["rst","ST",62,24]
-  ],
-  "4-2-3-1":[
-    ["gk","GK",50,94],["lb","LB",14,76],["lcb","CB",36,78],["rcb","CB",64,78],["rb","RB",86,76],
-    ["ldm","CDM",36,57],["rdm","CDM",64,57],["lam","LAM",18,39],["cam","CAM",50,36],["ram","RAM",82,39],["st","ST",50,19]
-  ],
-  "3-5-2":[
-    ["gk","GK",50,94],["lcb","CB",26,78],["cb","CB",50,80],["rcb","CB",74,78],
-    ["lwb","LWB",12,56],["lcm","CM",34,55],["cam","CAM",50,42],["rcm","CM",66,55],["rwb","RWB",88,56],["lst","ST",38,22],["rst","ST",62,22]
-  ],
-  "3-4-3":[
-    ["gk","GK",50,94],["lcb","CB",26,78],["cb","CB",50,80],["rcb","CB",74,78],
-    ["lm","LM",14,54],["lcm","CM",38,56],["rcm","CM",62,56],["rm","RM",86,54],["lw","LW",18,28],["st","ST",50,20],["rw","RW",82,28]
-  ],
-  "5-3-2":[
-    ["gk","GK",50,94],["lwb","LWB",10,74],["lcb","CB",30,78],["cb","CB",50,80],["rcb","CB",70,78],["rwb","RWB",90,74],
-    ["lcm","CM",30,53],["cam","CAM",50,42],["rcm","CM",70,53],["lst","ST",38,22],["rst","ST",62,22]
-  ]
-};
-let currentFormation="4-1-2-3";
-let slots=createSlots(currentFormation,startingPlayers);
-const defaultFormation=currentFormation;
-const defaultPlayers=[...startingPlayers];
+const lineupApi=window.AllAttackLineup;
+const players=lineupApi.players;
+const formations=lineupApi.formations;
+const defaultFormation=lineupApi.defaultFormation;
+const defaultPlayers=[...lineupApi.startingPlayers];
+let lineup=lineupApi.getLineup();
+let currentFormation=lineup.formation;
+let slots=lineup.slots;
 const pitchArea=document.getElementById("pitchArea");
 const library=document.getElementById("library");
 const toast=document.getElementById("toast");
 const EDIT_PASSWORD="659730";
-const SAVED_LINEUP_KEY="allAttackDefaultLineup";
 let canEdit=sessionStorage.getItem("allAttackFormationUnlocked")==="true";
 let selectedPlayerId=null;
-function loadSavedLineup(){
-  try{
-    const saved=JSON.parse(localStorage.getItem(SAVED_LINEUP_KEY)||"null");
-    if(saved&&formations[saved.formation]&&Array.isArray(saved.players))return saved;
-  }catch(e){}
-  return null;
-}
-const savedLineup=loadSavedLineup();
-function createSlots(formationName,playerIds){
-  return formations[formationName].map((item,index)=>({
-    key:item[0],
-    pos:item[1],
-    x:item[2],
-    y:item[3],
-    player:playerIds[index]||null
-  }));
-}
-currentFormation=savedLineup?savedLineup.formation:currentFormation;
-slots=createSlots(currentFormation,savedLineup?savedLineup.players:startingPlayers);
+const createSlots=lineupApi.createSlots;
 document.getElementById("formationSelect").value=currentFormation;
 function saveCurrentLineup(){
-  localStorage.setItem(SAVED_LINEUP_KEY,JSON.stringify({
-    formation:currentFormation,
-    players:slots.map(slot=>slot.player)
-  }));
+  lineupApi.saveLineup(currentFormation,slots);
 }
 function showToast(text){toast.textContent=text;toast.classList.add("show");setTimeout(()=>toast.classList.remove("show"),1700)}
-function byId(id){return players.find(p=>p.id===id)}
+function byId(id){return lineupApi.byId(id)}
 function usedIds(){return new Set(slots.map(slot=>slot.player).filter(Boolean))}
 function renderSlots(){
   pitchArea.querySelectorAll(".slot").forEach(el=>el.remove());
