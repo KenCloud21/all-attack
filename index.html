@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="zh-CN">
 <head>
 <meta charset="UTF-8">
@@ -660,7 +660,7 @@ footer{
 <section class="lineup-section">
   <div class="section-header">
     <div class="section-title">首发阵容图</div>
-    <span class="section-badge">4-1-2-3</span>
+    <span class="section-badge" data-lineup-formation>4-1-2-3</span>
   </div>
   <div class="lineup-board">
     <div class="lineup-poster">
@@ -669,9 +669,9 @@ footer{
           <div class="lineup-kicker">Starting XI</div>
           <h3>All ATTACK 首发名单</h3>
         </div>
-        <div class="lineup-match">
-          <strong>All ATTACK vs Storm Riders</strong>
-          5月27日 21:00 · 超级联赛第14轮
+        <div class="lineup-match" data-lineup-next-match>
+          <strong data-lineup-match-title>ShangHai5XL vs ALL ATTACK</strong>
+          <span data-lineup-match-meta>北京时间 2026-06-18 22:00 · FPL - L-Cup S9 · 客场</span>
         </div>
       </div>
       <aside class="lineup-side">
@@ -693,7 +693,7 @@ footer{
         </div>
         <a class="lineup-link" href="formation.html">查看完整阵容图</a>
       </aside>
-      <div class="pitch-area">
+      <div class="pitch-area" data-lineup-home-pitch>
         <div class="pitch-circle"></div>
         <div class="pitch-spot top"></div>
         <div class="pitch-spot bottom"></div>
@@ -811,7 +811,9 @@ footer{
   </div>
 </footer>
 
-<script src="js/proclub-schedule.js"></script>
+<script src="js/all-attack-lineup.js"></script>
+<script src="js/lineup-home.js"></script>
+<script src="js/proclub-schedule.js?v=20260616-2"></script>
 </body>
 </html>
 
