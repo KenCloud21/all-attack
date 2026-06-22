@@ -1,37 +1,21 @@
 {
   "source": "https://proclub.me/competitions/fpl/team/104-fifa-proclub-league-leaguecup-season-9/23228-all-attack",
-  "updatedAt": "2026-06-22T12:26:15.944Z",
+  "updatedAt": "2026-06-22T21:13:55.904Z",
   "competition": "FPL - L-Cup S9",
   "team": "ALL ATTACK",
   "stats": {
-    "rank": 3,
-    "played": 2,
+    "rank": 4,
+    "played": 4,
     "wins": 1,
-    "losses": 1,
-    "draws": 0,
-    "goalDifference": -3,
-    "points": 3,
+    "losses": 2,
+    "draws": 1,
+    "goalDifference": -7,
+    "points": 4,
     "totalGoals": 0,
     "longestWinStreak": 0,
     "championships": 0
   },
   "matches": [
-    {
-      "date": "2026-06-22",
-      "time": "22:00",
-      "home": "ShangHai5XL",
-      "away": "ALL ATTACK",
-      "venue": "客场",
-      "status": "即将"
-    },
-    {
-      "date": "2026-06-22",
-      "time": "22:30",
-      "home": "Old Sport",
-      "away": "ALL ATTACK",
-      "venue": "客场",
-      "status": "即将"
-    },
     {
       "date": "2026-06-25",
       "time": "22:00",
