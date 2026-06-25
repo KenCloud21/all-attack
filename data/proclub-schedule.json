@@ -1,29 +1,21 @@
 {
   "source": "https://proclub.me/competitions/fpl/team/104-fifa-proclub-league-leaguecup-season-9/23228-all-attack",
-  "updatedAt": "2026-06-25T09:44:52.753Z",
+  "updatedAt": "2026-06-25T15:13:48.301Z",
   "competition": "FPL - L-Cup S9",
   "team": "ALL ATTACK",
   "stats": {
     "rank": 4,
-    "played": 4,
+    "played": 5,
     "wins": 1,
-    "losses": 2,
+    "losses": 3,
     "draws": 1,
-    "goalDifference": -7,
+    "goalDifference": -8,
     "points": 4,
     "totalGoals": 0,
     "longestWinStreak": 0,
     "championships": 0
   },
   "matches": [
-    {
-      "date": "2026-06-25",
-      "time": "22:00",
-      "home": "Azapopi FC",
-      "away": "ALL ATTACK",
-      "venue": "客场",
-      "status": "即将"
-    },
     {
       "date": "2026-06-25",
       "time": "22:30",
